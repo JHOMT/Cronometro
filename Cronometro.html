@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timer {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cronómetro</h1>
+        <div class="timer">00:00:00</div>
+        <button id="start-btn">Comenzar</button>
+        <button id="stop-btn">Detener</button>
+        <button id="reset-btn">Reiniciar</button>
+    </div>
+    <script>
+        // Selecciona los elementos del DOM
+        const timer = document.querySelector('.timer');
+        const startBtn = document.querySelector('#start-btn');
+        const stopBtn = document.querySelector('#stop-btn');
+        const resetBtn = document.querySelector('#reset-btn');
+
+        // Define las variables del cronómetro
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+        let intervalId;
+
+        // Función para actualizar el cronómetro
+        function updateTimer() {
+        seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes === 60) {
+                minutes = 0;
+                hours++;
+                    if (hours==24) {
+                        hours==0;
+                    }
+                }
+            }
+        timer.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        // Función para comenzar el cronómetro
+        function startTimer() {
+            intervalId = setInterval(updateTimer, 1000);
+        }
+        // Función para detener el cronómetro
+        function stopTimer() {
+            clearInterval(intervalId);
+        }
+        // Función para reiniciar el cronómetro
+        function resetTimer() {
+            clearInterval(intervalId);
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            timer.innerHTML = '00:00:00';
+        }
+
+        // Agrega los eventos de los botones
+        startBtn.addEventListener('click', startTimer);
+        stopBtn.addEventListener('click', stopTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+    </script>
+</body>
+</html>
